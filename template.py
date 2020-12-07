@@ -2,6 +2,7 @@
 
 import argparse
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('data', type=argparse.FileType('r'))
@@ -20,8 +21,10 @@ def parse(data):
 def part_one(data):
     pass
 
+
 def part_two(data):
     pass
+
 
 if __name__ == '__main__':
     main()
