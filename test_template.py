@@ -2,6 +2,7 @@
 
 import io
 import main
+import os
 import unittest
 
 class TestMain(unittest.TestCase):
