@@ -20,13 +20,18 @@ xtwone3four
 4nineeightseven2
 zoneight234
 7pqrstsixteen
-aaaaaoneaaaaa
-aaaaaaaaaaaaa
-aaaaaa1aaaaaa
-aa1aaaaaaa2aa
-nineqtdtmmpjpkzpxmmfive83sevenseventhree
 sevenine
-oneone
+twone
+1two1
+one21
+onetwo1
+one2one
+1
+onetwone
+121
+1twoone
+12one
+oneight
 DATA
 
   def test_part_one
@@ -48,11 +53,10 @@ DATA
   end
 
   def test_part_two_for_real
-    skip 'Wait for part two to be done'
     input_path = File.join(File.dirname(__FILE__), 'input.data')
     File.open(input_path) do |input_file|
       main = Main.new(input_file.readlines.map(&:strip))
-      assert_equal 23, main.part_two
+      assert_equal 56324, main.part_two
     end
   end
 end

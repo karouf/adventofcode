@@ -29,17 +29,19 @@ class Main
       'nine' => '9'
     }
 
-    @data.map do |line|
-      numbers.select { |n| line.include? n }
-          .map { |n| [n, line.index(n)] }
-          .sort_by(&:last)
-          .values_at(0, -1)
-          .tap { |a| puts a }
-          .reject(&:nil?)
-          .map(&:first)
-          .map { |n| mapping[n] || n }
-          .join
-          .to_i
+    return @data.map do |line|
+      left_found = numbers.map do |n|
+        [n, line.index(n)]
+      end.reject{|r| r.last.nil?}.min_by{|m| m.last }.first
+      right_found = numbers.map do |n|
+        [n, line.rindex(n)]
+      end.reject{|r| r.last.nil?}.max_by{|m| m.last }.first
+
+      left = mapping[left_found] || left_found
+      right = mapping[right_found] || right_found
+
+      total = left + right
+      total.to_i
     end.sum
   end
 end
