@@ -26,3 +26,6 @@ test:	## Run today tests
 
 test_python:	## Run today tests in Python
 	@python -m unittest discover -s $$(date +%Y)/$$(date +%-d)/
+
+run:  ## Run against real input data
+	@ruby $$(date +%Y)/$$(date +%-d)/main.rb -d $$(date +%Y)/$$(date +%-d)/input.data
