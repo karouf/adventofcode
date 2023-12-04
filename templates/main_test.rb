@@ -9,13 +9,13 @@ class TestMain < Minitest::Test
 DATA
 
   def test_part_one
-    main = Main.new(StringIO.new(DATA))
+    main = Main.new(StringIO.new(DATA).readlines.map(&:strip))
     assert_equal 1337, main.part_one
   end
 
   def test_part_two
     skip 'Wait for part one to be done'
-    main = Main.new(StringIO.new(DATA))
+    main = Main.new(StringIO.new(DATA).readlines.map(&:strip))
     assert_equal 42, main.part_two
   end
 
