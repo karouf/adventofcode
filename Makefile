@@ -22,10 +22,10 @@ new_python:	## Start a new day in Python
 	touch $$(date "+%Y")/$$(date "+%-d")/input.data
 
 test:	## Run today tests
-	@ruby $$(date +%Y)/$$(date +%-d)/main_test.rb
+	@bundle exec ruby $$(date +%Y)/$$(date +%-d)/main_test.rb
 
 test_python:	## Run today tests in Python
 	@python -m unittest discover -s $$(date +%Y)/$$(date +%-d)/
 
 run:  ## Run against real input data
-	@ruby $$(date +%Y)/$$(date +%-d)/main.rb -d $$(date +%Y)/$$(date +%-d)/input.data
+	@bundle exec ruby $$(date +%Y)/$$(date +%-d)/main.rb -d $$(date +%Y)/$$(date +%-d)/input.data
