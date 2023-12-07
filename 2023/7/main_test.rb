@@ -32,11 +32,10 @@ class TestMain < Minitest::Test
   end
 
   def test_part_two_for_real
-    skip 'Wait for part two to be done'
     input_path = File.join(File.dirname(__FILE__), 'input.data')
     File.open(input_path) do |input_file|
       main = Main.new(input_file.readlines.map(&:strip))
-      assert_equal 23, main.part_two
+      assert_equal 253630098, main.part_two
     end
   end
 end

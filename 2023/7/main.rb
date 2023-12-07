@@ -13,13 +13,16 @@ class Main
     high_card
   ).freeze
 
-  CARD_RANKS = %w(A K Q J T 9 8 7 6 5 4 3 2).freeze
+  CARDS_RANKS = %w(A K Q J T 9 8 7 6 5 4 3 2).freeze
+  CARDS_RANKS_WITH_JOKER = %w(A K Q T 9 8 7 6 5 4 3 2 J).freeze
+
 
   def initialize(data)
     @data = data
   end
 
   def part_one
+
     hands = parse_data
     hands.map! do |hand|
       {hand: hand[:hand], bet: hand[:bet], rank: rank(hand)}
@@ -28,17 +31,32 @@ class Main
     hands.sort_by do |hand|
       [
         HAND_RANKS.index(hand[:rank]),
-        CARD_RANKS.index(hand[:hand][0]),
-        CARD_RANKS.index(hand[:hand][1]),
-        CARD_RANKS.index(hand[:hand][2]),
-        CARD_RANKS.index(hand[:hand][3]),
-        CARD_RANKS.index(hand[:hand][4])
+        CARDS_RANKS.index(hand[:hand][0]),
+        CARDS_RANKS.index(hand[:hand][1]),
+        CARDS_RANKS.index(hand[:hand][2]),
+        CARDS_RANKS.index(hand[:hand][3]),
+        CARDS_RANKS.index(hand[:hand][4])
       ]
     end.reverse.each_with_index.reduce(0) { |acc, (hand, index)| acc += hand[:bet] * (index+1)}
   end
 
   def part_two
-    # Your logic here
+    hands = parse_data
+    hands.map! do |hand|
+      {hand: hand[:hand], bet: hand[:bet], rank: rank_with_joker(hand)}
+    end
+
+    last = nil
+    hands.sort_by do |hand|
+      [
+        HAND_RANKS.index(hand[:rank]),
+        CARDS_RANKS_WITH_JOKER.index(hand[:hand][0]),
+        CARDS_RANKS_WITH_JOKER.index(hand[:hand][1]),
+        CARDS_RANKS_WITH_JOKER.index(hand[:hand][2]),
+        CARDS_RANKS_WITH_JOKER.index(hand[:hand][3]),
+        CARDS_RANKS_WITH_JOKER.index(hand[:hand][4])
+      ]
+    end.reverse.each_with_index.reduce(0) { |acc, (hand, index)| acc += hand[:bet] * (index+1)}
   end
 
   private
@@ -69,8 +87,38 @@ class Main
     end
   end
 
+  def rank_with_joker(hand)
+    case card_groups_with_joker(hand[:hand])
+    when [5]
+      :five_of_a_kind
+    when [1, 4]
+      :four_of_a_kind
+    when [2, 3]
+      :full_house
+    when [1, 1, 3]
+      :three_of_a_kind
+    when [1, 2, 2]
+      :two_pairs
+    when [1, 1, 1, 2]
+      :one_pair
+    when [1, 1, 1, 1, 1]
+      :high_card
+    end
+  end
+
   def card_groups(hand)
     hand.tally.values.sort
+  end
+
+  def card_groups_with_joker(hand)
+    groups = hand.tally
+    jokers = groups.delete('J')
+
+    return [5] if groups.empty?
+
+    highest = groups.max_by { |k, v| [v, CARDS_RANKS_WITH_JOKER.index(k)] }[0]
+    groups[highest] += jokers if jokers
+    groups.values.sort
   end
 end
 
