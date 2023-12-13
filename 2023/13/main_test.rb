@@ -29,9 +29,8 @@ class TestMain < Minitest::Test
   end
 
   def test_part_two
-    skip 'Wait for part one to be done'
     main = Main.new(StringIO.new(DATA).readlines.map(&:strip))
-    assert_equal 42, main.part_two
+    assert_equal 400, main.part_two
   end
 
   def test_part_one_for_real
